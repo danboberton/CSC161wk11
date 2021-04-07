@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Liang.chpt42;
+package chpt42;
 
 /**
  *
@@ -13,7 +13,7 @@ package Liang.chpt42;
 
 import java.util.ArrayList;
 
-public class Tree24<E extends Comparable<E>> implements Liang.chpt25.Tree<E> {
+public class Tree24<E extends Comparable<E>> implements chapter25.Tree<E> {
   private Tree24Node<E> root;
   private int size;
  
@@ -363,14 +363,91 @@ public class Tree24<E extends Comparable<E>> implements Liang.chpt25.Tree<E> {
   }
 
   @Override /** Inorder traversal from the root*/
+  // Print in order traversal of the tree
   public void inorder() {
-    // Left as exercise
+    ArrayList<E> inOrder = new ArrayList<>();
+
+    inorderRecurse(root, inOrder);
+
+    System.out.println("In order traversal:");
+    System.out.println(inOrder);
+
+  }
+
+  private void inorderRecurse(Tree24Node<E> node, ArrayList<E> listElements){
+
+      // Find leaf, add to list
+      if (node.child.isEmpty()){
+
+        // Add elements to list
+        for (E e : node.elements){
+          listElements.add(e);
+        }
+
+        return;
+      } else {
+
+      // Recurse down
+      // Account for amount of elements
+        int size = node.elements.size();
+        int index = size;
+        switch (size){
+          case 3:
+            inorderRecurse(node.child.get(size - index), listElements);
+            listElements.add(node.elements.get(size - index));
+            index --;
+          case 2:
+            inorderRecurse(node.child.get(size - index), listElements);
+            listElements.add(node.elements.get(size - index));
+            index --;
+          case 1:
+            inorderRecurse(node.child.get(size - index), listElements);
+            listElements.add(node.elements.get(size - index));
+            index --;
+            inorderRecurse(node.child.get(size - index), listElements);
+            return;
+          default:
+            System.out.println("Error");
+
+        } // end switch
+
+      } // end non-leaf else
+
   }
 
   /** Postorder traversal from the root */
   public void postorder() {
-    // Left as exercise
+    ArrayList<E> postOrder = new ArrayList<>();
+
+    postOrderRecurse(root, postOrder);
+
+    System.out.println("Post order traversal:");
+    System.out.println(postOrder);
   }
+
+  private void postOrderRecurse(Tree24Node<E> node, ArrayList<E> listElements){
+    // Find leaf, add to list
+    if (node.child.isEmpty()){
+
+      // Add elements to list
+      for (E e : node.elements){
+        listElements.add(e);
+      }
+
+      return;
+    } else {
+
+      for(Tree24Node<E> e : node.child){
+        postOrderRecurse(e, listElements);
+      }
+
+      for (E e : node.elements){
+        listElements.add(e);
+      }
+
+      return;
+    } // end non-leaf else
+  } // end postOrderRecurse
 
   @Override /** Return true if the tree is empty */
   public boolean isEmpty() {
@@ -393,7 +470,7 @@ public class Tree24<E extends Comparable<E>> implements Liang.chpt25.Tree<E> {
   protected static class Tree24Node<E extends Comparable<E>> {
     // elements has maximum three values
     ArrayList<E> elements = new ArrayList<E>(3);
-    // Each has maximum four childres
+    // Each has maximum four children
     ArrayList<Tree24Node<E>> child 
       = new ArrayList<Tree24Node<E>>(4);
 

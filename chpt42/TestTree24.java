@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Liang.chpt42;
-import Liang.chpt25.Tree;
+package chpt42;
+import chapter25.Tree;
 /**
  *
  * @author Y. Daniel Liang
@@ -26,6 +26,9 @@ public class TestTree24 {
     tree.insert(27);
     tree.insert(29);
     tree.insert(24);
+
+    tree.inorder();
+    tree.postorder();
     System.out.print("\nAfter inserting 24:");
     printTree(tree);
     tree.insert(23);
